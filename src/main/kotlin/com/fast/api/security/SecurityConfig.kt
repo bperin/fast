@@ -1,6 +1,5 @@
-package security
+package com.fast.api.security
 
-import com.cusp.app.security.TokenService
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.context.annotation.Configuration
 import org.springframework.security.config.annotation.web.builders.HttpSecurity
@@ -23,15 +22,14 @@ class SecurityConfig() : WebSecurityConfigurerAdapter() {
             "/v2/api-docs",
             "/configuration/ui",
             "/swagger-resources/**",
-            "/configuration/security",
+            "/configuration/com.fast.api.security",
             "/swagger-ui.html",
             "/swagger-ui/",
             "/swagger-ui/**",
             "/webjars/**",
             "/api/v1/auth/**",
-            "/api/v1/workers/signup",
-            "/api/v1/offices/signup",
-            "/api/v1/public/**",
+            "/api/v1/users/signup",
+            "/api/v1/owners/signup",
             "/messages",
             "/index.html"
         )

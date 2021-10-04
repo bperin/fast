@@ -1,7 +1,6 @@
-package security
+package com.fast.api.security
 
 
-import com.cusp.app.security.TokenService
 import com.fast.api.util.Constants
 import io.jsonwebtoken.ExpiredJwtException
 import io.jsonwebtoken.MalformedJwtException

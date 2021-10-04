@@ -1,4 +1,4 @@
-package security
+package com.fast.api.security
 
 import com.fast.api.util.Constants
 import javax.servlet.http.HttpServletRequest

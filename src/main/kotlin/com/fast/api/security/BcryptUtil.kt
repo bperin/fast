@@ -1,4 +1,4 @@
-package security
+package com.fast.api.security
 
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 import java.security.SecureRandom

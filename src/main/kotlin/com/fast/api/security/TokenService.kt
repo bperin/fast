@@ -1,13 +1,9 @@
-package com.cusp.app.security
+package com.fast.api.security
 
-import com.cusp.app.model.Office
-import com.cusp.app.model.RefreshToken
-import com.cusp.app.model.Worker
-import com.cusp.app.model.request.RefreshTokenRequest
-import com.cusp.app.repo.RefreshTokensRepo
-import com.cusp.app.util.Constants
+import com.fast.api.model.RefreshToken
 import com.fast.api.model.User
 import com.fast.api.model.request.RefreshTokenRequest
+import com.fast.api.repo.RefreshTokensRepo
 import com.fast.api.util.Constants
 import io.jsonwebtoken.*
 import org.joda.time.DateTime
@@ -23,21 +19,21 @@ class TokenService {
     @Value("\${jwt.secret}")
     val secret = "secret"
 
-//    @Autowired
-//    private lateinit var refreshTokensRepo: RefreshTokensRepo //TODO refresh tokens
+    @Autowired
+    private lateinit var refreshTokensRepo: RefreshTokensRepo //TODO refresh tokens
 
     /**
      * Creates a new auth token and refresh token removes old refresh token from database
      */
 
-    private fun createAuthToken(user: User, response: HttpServletResponse) {
+    private fun createAuthToken(request: RefreshTokenRequest, response: HttpServletResponse) {
 
         val expDate = DateTime().plusYears(5)
         var subject: String? = null
         var role: String? = null
 
         subject.apply {
-            subject = user.id.toString()
+            subject = request.userId
             role = Constants.USER
         }
 
@@ -75,8 +71,7 @@ class TokenService {
 
         val refreshToken = RefreshToken()
         refreshToken.token = refreshJwt
-        refreshToken.worker = worker
-        refreshToken.office = office
+        refreshToken.user = user
 
         refreshTokensRepo.save(refreshToken)
 
@@ -94,20 +89,9 @@ class TokenService {
             val refreshToken = refreshTokensRepo.getRefreshToken(inputToken)
 
             refreshToken?.let {
-
-                val worker: Worker? = it.worker
-                val office: Office? = it.office
-
-//                if (request.userId != refreshToken.user!!.id.toString()) {
-//                    analyticsService.refreshFailure("user id mismatch to refresh token", token, inputToken)
-//                    response.setContentType("application/json")
-//                    response.setStatus(HttpServletResponse.SC_FORBIDDEN, "User id mismatch")
-//
-//                    return
-//                }
                 try {
 
-                    createAuthToken(worker, office, response)
+                    createAuthToken(request, response)
 
                 } catch (e: SignatureException) {
 //                    analyticsService.refreshFailure("signature exception", token, inputToken)
