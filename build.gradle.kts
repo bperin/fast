@@ -43,6 +43,9 @@ dependencies {
     implementation("com.google.firebase:firebase-admin:6.11.0")
     implementation("io.jsonwebtoken:jjwt:0.9.1")
 
+    implementation("joda-time:joda-time:2.10.5")
+
+
     implementation("org.modelmapper:modelmapper:2.4.0")
 
     runtimeOnly("com.h2database:h2") //h2 if we want in mem testing
