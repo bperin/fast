@@ -6,6 +6,9 @@ import com.cusp.app.model.Worker
 import com.cusp.app.model.request.RefreshTokenRequest
 import com.cusp.app.repo.RefreshTokensRepo
 import com.cusp.app.util.Constants
+import com.fast.api.model.User
+import com.fast.api.model.request.RefreshTokenRequest
+import com.fast.api.util.Constants
 import io.jsonwebtoken.*
 import org.joda.time.DateTime
 import org.springframework.beans.factory.annotation.Autowired
@@ -27,57 +30,47 @@ class TokenService {
      * Creates a new auth token and refresh token removes old refresh token from database
      */
 
-
-    private fun createAuthToken(worker: Worker?, office: Office?, response: HttpServletResponse) {
+    private fun createAuthToken(user: User, response: HttpServletResponse) {
 
         val expDate = DateTime().plusYears(5)
         var subject: String? = null
         var role: String? = null
 
-        if (worker != null) {
-            subject = worker.id.toString()
-            role = Constants.WORKER
-        }
-        if (office != null) {
-            subject = office.id.toString()
-            role = Constants.OFFICE
+        subject.apply {
+            subject = user.id.toString()
+            role = Constants.USER
         }
 
         val authJwt = Jwts.builder()
-                .setSubject(subject)
-                .setId(UUID.randomUUID().toString())
-                .claim(Constants.ROLES, role)
-                .setIssuedAt(Date())
-                .signWith(SignatureAlgorithm.HS256, Base64.getEncoder().encodeToString(secret.toByteArray()))
-                .setExpiration(expDate.toDate())
-                .compact()
+            .setSubject(subject)
+            .setId(UUID.randomUUID().toString())
+            .claim(Constants.ROLES, role)
+            .setIssuedAt(Date())
+            .signWith(SignatureAlgorithm.HS256, Base64.getEncoder().encodeToString(secret.toByteArray()))
+            .setExpiration(expDate.toDate())
+            .compact()
 
         response.addHeader(Constants.JWT_TOKEN_HEADER, authJwt)
         response.addHeader(Constants.JWT_TOKEN_EXPIRATION_HEADER, expDate.millis.toString())
     }
 
-    private fun createRefreshToken(worker: Worker?, office: Office?, response: HttpServletResponse) {
+    private fun createRefreshToken(user: User, response: HttpServletResponse) {
 
         val expDate = DateTime().plusYears(5)
         var subject: String? = null
 
-        if (worker != null) {
-            subject = worker.id.toString()
-            refreshTokensRepo.deleteForWorker(worker.id)
-        }
-        if (office != null) {
-            subject = office.id.toString()
-            refreshTokensRepo.deleteForOffice(office.id)
+        subject.apply {
+            subject = user.id.toString()
         }
 
         val refreshJwt = Jwts.builder()
-                .setSubject(subject)
-                .setId(UUID.randomUUID().toString())
-                .claim(Constants.ROLES, "refresh_token")
-                .setIssuedAt(Date())
-                .signWith(SignatureAlgorithm.HS256, Base64.getEncoder().encodeToString(secret.toByteArray()))
-                .setExpiration(expDate.toDate())
-                .compact()
+            .setSubject(subject)
+            .setId(UUID.randomUUID().toString())
+            .claim(Constants.ROLES, "refresh_token")
+            .setIssuedAt(Date())
+            .signWith(SignatureAlgorithm.HS256, Base64.getEncoder().encodeToString(secret.toByteArray()))
+            .setExpiration(expDate.toDate())
+            .compact()
 
 
         val refreshToken = RefreshToken()
@@ -156,6 +149,6 @@ class TokenService {
      */
     fun getClaims(token: String): Claims {
         return Jwts.parser().setSigningKey(Base64.getEncoder().encodeToString(secret.toByteArray()))
-                .parseClaimsJws(token).body
+            .parseClaimsJws(token).body
     }
 }

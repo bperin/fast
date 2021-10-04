@@ -45,6 +45,7 @@ dependencies {
 
     implementation("joda-time:joda-time:2.10.5")
 
+    implementation("com.google.code.gson:gson:2.8.8")
 
     implementation("org.modelmapper:modelmapper:2.4.0")
 
