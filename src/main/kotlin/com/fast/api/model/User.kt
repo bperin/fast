@@ -1,6 +1,5 @@
 package com.fast.api.model
 
-import com.fasterxml.jackson.annotation.JsonIgnore
 import io.swagger.v3.oas.annotations.media.Schema
 import org.hibernate.annotations.CreationTimestamp
 import org.hibernate.annotations.Type
@@ -9,6 +8,7 @@ import org.joda.time.DateTime
 import org.joda.time.Period
 import java.util.*
 import javax.persistence.*
+import kotlin.jvm.Transient
 
 
 @Entity
@@ -35,26 +35,22 @@ data class User(
     var number: String? = null
 
     @Column(name = "email")
-    @JsonIgnore
     var email: String? = null
 
     @Column(name = "birthday")
     var birthday: Date? = null
 
     @Column(name = "fcm_token", nullable = true)
-    @JsonIgnore
     var fcmToken: String? = null
 
     @Column(name = "blocked", nullable = false)
-    @JsonIgnore
-    var blocked: Boolean = false
+    var blocked = false
 
     @Column(name = "strikes", nullable = false)
-    @JsonIgnore
     var strikes: Int = 0
 
     @Column(name = "push_enabled", nullable = false)
-    var pushEnabled: Boolean = false
+    var pushEnabled = false
 
     @CreationTimestamp
     @Column(name = "created_at", updatable = false)
@@ -65,7 +61,6 @@ data class User(
     val updatedAt: Date = Date()
 
     @Transient
-    @JsonIgnore
     var age: Int = -1
         get() {
             birthday?.let {
@@ -76,5 +71,6 @@ data class User(
             return -1
         }
 
-
+    @OneToMany(fetch = FetchType.EAGER)
+    var tokens: List<RefreshToken> = mutableListOf()
 }

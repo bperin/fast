@@ -17,14 +17,4 @@ interface RefreshTokensRepo : CrudRepository<RefreshToken, UUID> {
 
     @Query("SELECT * FROM refresh_tokens WHERE token = ?1 LIMIT 1", nativeQuery = true)
     fun getRefreshToken(token: String): RefreshToken?
-
-    @Modifying
-    @Transactional
-    @Query("DELETE FROM refresh_tokens WHERE worker_id = ?1", nativeQuery = true)
-    fun deleteForWorker(id: UUID)
-
-    @Modifying
-    @Transactional
-    @Query("DELETE FROM refresh_tokens WHERE office_id = ?1", nativeQuery = true)
-    fun deleteForOffice(id: UUID)
 }

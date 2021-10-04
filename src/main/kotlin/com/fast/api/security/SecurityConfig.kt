@@ -30,6 +30,8 @@ class SecurityConfig() : WebSecurityConfigurerAdapter() {
             "/api/v1/auth/**",
             "/api/v1/users/signup",
             "/api/v1/owners/signup",
+            "/api/v1/healthcheck",
+            "/api/v1/healthcheck/",
             "/messages",
             "/index.html"
         )

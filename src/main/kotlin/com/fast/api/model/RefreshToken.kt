@@ -6,6 +6,7 @@ import org.joda.time.DateTime
 import java.util.*
 import javax.persistence.*
 
+
 @Entity
 @Table(name = "refresh_tokens")
 data class RefreshToken(
@@ -17,7 +18,7 @@ data class RefreshToken(
     @Column(name = "token", unique = true, nullable = false, columnDefinition = "text")
     var token: String? = null
 
-    @OneToOne(fetch = FetchType.LAZY, optional = true, targetEntity = User::class)
+    @ManyToOne(fetch = FetchType.LAZY, optional = true)
     var user: User? = null
 
     @CreationTimestamp
