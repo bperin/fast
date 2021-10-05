@@ -1,11 +1,12 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
-    id("org.springframework.boot") version "2.5.5"
+    id("org.springframework.boot") version "2.5.2"
     id("io.spring.dependency-management") version "1.0.11.RELEASE"
-    kotlin("jvm") version "1.5.31"
-    kotlin("plugin.spring") version "1.5.31"
-    kotlin("plugin.jpa") version "1.5.31"
+    id("org.sonatype.gradle.plugins.scan") version "1.0.0"
+    kotlin("jvm") version "1.5.20"
+    kotlin("plugin.spring") version "1.5.20"
+    kotlin("plugin.allopen") version "1.4.32"
 }
 
 group = "com.fast"
@@ -21,6 +22,8 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-data-jpa")
     implementation("org.springframework.boot:spring-boot-starter-security")
     implementation("org.springframework.boot:spring-boot-starter-web")
+    implementation("org.springframework.boot:spring-boot-starter-actuator")
+    developmentOnly("org.springframework.boot:spring-boot-devtools")
     implementation("org.jetbrains.kotlin:kotlin-reflect")
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
     implementation("org.springframework.session:spring-session-core")
@@ -52,6 +55,12 @@ dependencies {
     runtimeOnly("com.h2database:h2") //h2 if we want in mem testing
 
 
+}
+
+allOpen {
+    annotation("javax.persistence.Entity")
+    annotation("javax.persistence.Embeddable")
+    annotation("javax.persistence.MappedSuperclass")
 }
 
 tasks.withType<KotlinCompile> {
