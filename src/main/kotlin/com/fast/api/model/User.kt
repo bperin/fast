@@ -70,7 +70,4 @@ data class User(
             }
             return -1
         }
-
-    @OneToMany(fetch = FetchType.EAGER)
-    var tokens: List<RefreshToken> = mutableListOf()
 }
