@@ -28,11 +28,14 @@ dependencies {
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
     implementation("org.springframework.session:spring-session-core")
     developmentOnly("org.springframework.boot:spring-boot-devtools")
+
+    //test
+    testImplementation("org.springframework.security:spring-security-test")
     testImplementation("org.springframework.boot:spring-boot-starter-test")
-    testImplementation("org.springframework.com.fast.api.security:spring-com.fast.api.security-test")
+    testImplementation("org.junit.jupiter:junit-jupiter-engine:5.2.0")
+    testImplementation("org.mockito:mockito-junit-jupiter:2.23.0")
 
     //networking
-    implementation("com.squareup.okhttp3:okhttp:4.9.2")
     implementation("com.squareup.retrofit2:retrofit:2.9.0")
     implementation("com.squareup.retrofit2:converter-gson:2.9.0")
     implementation("com.squareup.okhttp3:logging-interceptor:3.14.8")

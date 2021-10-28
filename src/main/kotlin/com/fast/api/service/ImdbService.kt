@@ -5,6 +5,7 @@ import com.fast.api.util.Constants
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import org.springframework.beans.factory.annotation.Value
+import org.springframework.stereotype.Component
 import org.springframework.stereotype.Service
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -13,7 +14,7 @@ import javax.annotation.PostConstruct
 /**
  * Class to interface with IMDB api
  */
-@Service
+@Component
 class ImdbService {
 
     @Value("\${imdb.key}")
@@ -40,13 +41,12 @@ class ImdbService {
 
         val okHttpClient = OkHttpClient.Builder()
             .addInterceptor(logging)
-            .addInterceptor { chain ->
-
+            .addNetworkInterceptor { chain ->
                 println("adding interceptors")
 
                 val original = chain.request()
                 val builder = original.newBuilder()
-                val originalHttpUrl = original.url
+                val originalHttpUrl = original.url()
 
                 val url = originalHttpUrl.newBuilder()
                     .addQueryParameter(API_KEY, apiKeyValue)
@@ -55,7 +55,7 @@ class ImdbService {
                 builder.header(Constants.ACCEPT, Constants.APPLICATION_JSON)
                 builder.header(Constants.ACCEPT_ENCODING, Constants.APPLICATION_JSON)
                 builder.header(Constants.CONTENT_TYPE, Constants.APPLICATION_JSON)
-                builder.method(original.method, original.body)
+                builder.method(original.method(), original.body())
                 builder.url(url)
 
                 val originalRequest = chain.proceed(builder.build())

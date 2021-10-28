@@ -5,9 +5,11 @@ import com.fast.api.repo.MoviesRepo
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.context.annotation.DependsOn
 import org.springframework.context.event.ContextRefreshedEvent
 import org.springframework.context.event.EventListener
 import org.springframework.core.io.ClassPathResource
+import org.springframework.stereotype.Component
 import org.springframework.stereotype.Service
 import java.lang.reflect.Type
 import java.nio.file.Files
@@ -18,11 +20,14 @@ import java.nio.file.Files
  * if not add the ones from the json list ideally a migration
  * script would be best
  */
-@Service
+@Component
 class LoadMoviesService {
 
     @Autowired
     lateinit var moviesRepo: MoviesRepo
+
+    @Autowired
+    lateinit var imdbService: ImdbService
 
     @EventListener
     fun onApplicationEvent(event: ContextRefreshedEvent?) {
@@ -40,7 +45,15 @@ class LoadMoviesService {
 
             movies.forEach {
                 moviesRepo.save(it)
+                val response = imdbService.apiClient.getMovie(it.imdbId).execute()
+
+                if (response.isSuccessful) {
+                    println(response.body())
+                } else {
+                    println(response.errorBody().toString())
+                }
             }
+
 
         }
     }
