@@ -33,23 +33,22 @@ dependencies {
 
     //networking
     implementation("com.squareup.okhttp3:okhttp:4.9.2")
-    implementation("com.squareup.retrofit2:converter-gson:2.9.0")// TODO if problem version might be an issue
+    implementation("com.squareup.retrofit2:retrofit:2.9.0")
+    implementation("com.squareup.retrofit2:converter-gson:2.9.0")
+    implementation("com.squareup.okhttp3:logging-interceptor:3.14.8")
 
     //db
     runtimeOnly("org.postgresql:postgresql")
 
-    //documenation
+    //documentation
     implementation("io.springfox:springfox-boot-starter:3.0.0")
     implementation("io.springfox:springfox-swagger-ui:3.0.0")
 
-    //firebase admin and jwt
-    implementation("com.google.firebase:firebase-admin:6.11.0")
+
     implementation("io.jsonwebtoken:jjwt:0.9.1")
 
     implementation("joda-time:joda-time:2.10.5")
-
     implementation("com.google.code.gson:gson:2.8.8")
-
     implementation("org.modelmapper:modelmapper:2.4.0")
 
     runtimeOnly("com.h2database:h2") //h2 if we want in mem testing
