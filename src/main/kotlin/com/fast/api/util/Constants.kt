@@ -23,6 +23,9 @@ object Constants {
     const val AUTHORIZATION = "authorization"
     const val BEARER = "Bearer"
     const val APPLICATION_JSON = "application/json"
+    const val ACCEPT = "accept"
+    const val ACCEPT_ENCODING = "Accept-Encoding"
+    const val CONTENT_TYPE = "Content-Type"
 
 
 }
