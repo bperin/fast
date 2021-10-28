@@ -1,30 +1,22 @@
 package com.fast.api.model
 
-import io.swagger.v3.oas.annotations.media.Schema
 import org.hibernate.annotations.CreationTimestamp
 import org.hibernate.annotations.Type
 import org.hibernate.annotations.UpdateTimestamp
 import java.util.*
-import javax.persistence.Column
-import javax.persistence.Entity
-import javax.persistence.Id
-import javax.persistence.Table
+import javax.persistence.*
 
 
 @Entity
-@Table(name = "movies")
-data class Movies(
+@Table(name = "cinemas")
+data class Cinema(
     @Id
     @Type(type = "pg-uuid")
     val id: UUID = UUID.randomUUID()
 ) {
 
-    @Column(name = "title")
-    @field:Schema(description = "title", type = "String", example = "The Fast and the Furious", nullable = false)
-    var username: String = ""
-
-    @Column(name = "idmb_id", nullable = false)
-    var imdbId: String = ""
+    @OneToMany(fetch = FetchType.EAGER, targetEntity = ShowTime::class)
+    var showTimes: MutableList<ShowTime> = mutableListOf()
 
     @CreationTimestamp
     @Column(name = "created_at", updatable = false)
