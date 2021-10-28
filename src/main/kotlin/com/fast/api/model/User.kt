@@ -7,8 +7,10 @@ import org.hibernate.annotations.UpdateTimestamp
 import org.joda.time.DateTime
 import org.joda.time.Period
 import java.util.*
-import javax.persistence.*
-import kotlin.jvm.Transient
+import javax.persistence.Column
+import javax.persistence.Entity
+import javax.persistence.Id
+import javax.persistence.Table
 
 
 @Entity
