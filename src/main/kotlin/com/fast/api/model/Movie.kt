@@ -1,5 +1,7 @@
 package com.fast.api.model
 
+import com.fasterxml.jackson.annotation.JsonProperty
+import com.google.gson.annotations.SerializedName
 import io.swagger.v3.oas.annotations.media.Schema
 import org.hibernate.annotations.CreationTimestamp
 import org.hibernate.annotations.Type
@@ -20,10 +22,13 @@ data class Movie(
 ) {
 
     @Column(name = "title")
+    @JsonProperty("title")
     @field:Schema(description = "title", type = "String", example = "The Fast and the Furious", nullable = false)
     var title: String = ""
 
-    @Column(name = "idmb_id", nullable = false)
+    @Column(name = "idmb_id", nullable = false, unique = true)
+    @SerializedName("imdb_id") //needed for Gson loading
+    @JsonProperty("imdb_id")
     var imdbId: String = ""
 
     @CreationTimestamp
