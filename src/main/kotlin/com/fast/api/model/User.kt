@@ -1,5 +1,6 @@
 package com.fast.api.model
 
+import com.fasterxml.jackson.annotation.JsonIgnore
 import io.swagger.v3.oas.annotations.media.Schema
 import org.hibernate.annotations.CreationTimestamp
 import org.hibernate.annotations.Type
@@ -25,34 +26,12 @@ data class User(
     @field:Schema(description = "username", type = "String", example = "Briguy")
     var username: String? = null
 
-    @Column(name = "first", length = 50)
-    @field:Schema(description = "first name", type = "String", example = "Brian")
-    var first: String? = null
+    @Column(name = "password", nullable = false)
+    @JsonIgnore
+    var password: String = ""
 
-    @Column(name = "last", length = 50)
-    @field:Schema(description = "last name", type = "String", example = "Perin")
-    var last: String? = null
-
-    @Column(name = "number", unique = true, nullable = true, updatable = true)
-    var number: String? = null
-
-    @Column(name = "email")
-    var email: String? = null
-
-    @Column(name = "birthday")
-    var birthday: Date? = null
-
-    @Column(name = "fcm_token", nullable = true)
-    var fcmToken: String? = null
-
-    @Column(name = "blocked", nullable = false)
-    var blocked = false
-
-    @Column(name = "strikes", nullable = false)
-    var strikes: Int = 0
-
-    @Column(name = "push_enabled", nullable = false)
-    var pushEnabled = false
+    @Column(name = "owner", nullable = false)
+    var available: Boolean = false
 
     @CreationTimestamp
     @Column(name = "created_at", updatable = false)
@@ -62,14 +41,4 @@ data class User(
     @Column(name = "updated_at")
     val updatedAt: Date = Date()
 
-    @Transient
-    var age: Int = -1
-        get() {
-            birthday?.let {
-                val period = Period(DateTime(birthday), DateTime())
-//                return period.years.toString() + "." + period.months.toString()
-                return period.years
-            }
-            return -1
-        }
 }
