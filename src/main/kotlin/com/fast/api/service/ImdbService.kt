@@ -1,25 +1,36 @@
-package com.fast.api.network
+package com.fast.api.service
 
 import com.fast.api.`interface`.ImdbApiInterface
 import com.fast.api.util.Constants
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import org.springframework.beans.factory.annotation.Value
+import org.springframework.stereotype.Service
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import javax.annotation.PostConstruct
 
-
-class Imdb {
+/**
+ * Class to interface with IMDB api
+ */
+@Service
+class ImdbService {
 
     @Value("\${imdb.key}")
     private lateinit var apiKeyValue: String
+
+    lateinit var apiClient: ImdbApiInterface
 
     companion object {
         const val API_ENDPOINT = "http://www.omdbapi.com"
         const val API_KEY = "apikey"
     }
 
-    val imdbApiClient: ImdbApiInterface by lazy {
+    /**
+     * Build client when bean initialized
+     */
+    @PostConstruct
+    fun setup() {
 
         println("setting up api client")
 
@@ -54,7 +65,7 @@ class Imdb {
             }
             .build()
 
-        Retrofit.Builder()
+        apiClient = Retrofit.Builder()
             .baseUrl(API_ENDPOINT)
             .client(okHttpClient)
             .addConverterFactory(GsonConverterFactory.create())
