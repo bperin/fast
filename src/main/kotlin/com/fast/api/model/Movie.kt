@@ -21,7 +21,7 @@ data class Movie(
 
     @Column(name = "title")
     @field:Schema(description = "title", type = "String", example = "The Fast and the Furious", nullable = false)
-    var username: String = ""
+    var title: String = ""
 
     @Column(name = "idmb_id", nullable = false)
     var imdbId: String = ""
