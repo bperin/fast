@@ -52,7 +52,7 @@ class TokenService {
 
     private fun createRefreshToken(user: User, response: HttpServletResponse) {
 
-        val expDate = DateTime().plusYears(5)
+        val expDate = DateTime().plusMinutes(5)
         var subject: String? = null
 
         subject.apply {
