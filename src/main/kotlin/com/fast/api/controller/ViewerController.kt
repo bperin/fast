@@ -5,11 +5,11 @@ import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 
 /**
- * Endpoint to ping that the server is ok
+ * Controller for fetching movie details from
  */
 @RestController
 @RequestMapping("/api/v1/health")
-class HealthCheck : MainController() {
+class ViewerController {
 
     @GetMapping
     fun basicHealthCheck(): String = "OK"
