@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RestController
  * Controller for fetching movie details from
  */
 @RestController
-@RequestMapping("/api/v1/health")
+@RequestMapping("/api/v1/viewers")
 class ViewerController {
 
     @GetMapping

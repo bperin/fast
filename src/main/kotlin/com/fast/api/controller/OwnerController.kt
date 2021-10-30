@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RestController
  * Controller for owners for CRUD operations on cinemas
  */
 @RestController
-@RequestMapping("/api/v1/health")
+@RequestMapping("/api/v1/owners")
 class OwnerController {
 
     @GetMapping
