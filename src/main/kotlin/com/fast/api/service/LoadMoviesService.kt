@@ -45,16 +45,19 @@ class LoadMoviesService {
 
             movies.forEach {
                 moviesRepo.save(it)
-                val response = imdbService.apiClient.getMovie(it.imdbId).execute()
-
-                if (response.isSuccessful) {
-                    println(response.body())
-                } else {
-                    println(response.errorBody().toString())
-                }
             }
+        }
+        /**
+         *
+         */
+        fun getMovieDetails(movie: Movie) {
+            val response = imdbService.apiClient.getMovie(movie.imdbId).execute()
 
-
+            if (response.isSuccessful) {
+                println(response.body())
+            } else {
+                println(response.errorBody().toString())
+            }
         }
     }
 }
