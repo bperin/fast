@@ -16,8 +16,8 @@ data class ShowTime(
     val id: UUID = UUID.randomUUID()
 ) {
 
-    @OneToOne(fetch = FetchType.EAGER, targetEntity = Movie::class)
-    lateinit var movie: Movie
+    @ManyToOne(fetch = FetchType.EAGER, targetEntity = Movie::class)
+    var movie: Movie = Movie()
 
     @Timestamp
     var startTime = Date()

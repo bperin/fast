@@ -7,10 +7,7 @@ import org.hibernate.annotations.CreationTimestamp
 import org.hibernate.annotations.Type
 import org.hibernate.annotations.UpdateTimestamp
 import java.util.*
-import javax.persistence.Column
-import javax.persistence.Entity
-import javax.persistence.Id
-import javax.persistence.Table
+import javax.persistence.*
 
 
 @Entity
@@ -20,6 +17,9 @@ data class Movie(
     @Type(type = "pg-uuid")
     val id: UUID = UUID.randomUUID()
 ) {
+
+    @OneToMany(fetch = FetchType.EAGER)
+    var showTimes: MutableList<ShowTime> = mutableListOf()
 
     @Column(name = "title")
     @JsonProperty("title")
