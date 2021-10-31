@@ -6,13 +6,13 @@ import java.security.SecureRandom
 object BcryptUtil {
 
     fun hashPassword(unencryptedPassword: String): String {
-        val strength = 15
+        val strength = 10
         val bCryptPasswordEncoder = BCryptPasswordEncoder(strength, SecureRandom())
         return bCryptPasswordEncoder.encode(unencryptedPassword)
     }
 
     fun checkPassword(unencryptedPassword: String, encryptedPassword: String): Boolean {
-        val strength = 15
+        val strength = 10
         val bCryptPasswordEncoder = BCryptPasswordEncoder(strength, SecureRandom())
         return bCryptPasswordEncoder.matches(unencryptedPassword, encryptedPassword)
     }
