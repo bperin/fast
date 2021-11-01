@@ -40,12 +40,10 @@ class TokenService {
      * Creates a new auth token and refresh token removes old refresh token from database
      * If the user is our pre defined primary owner set them as owner
      */
-
     private fun createAuthToken(user: User, response: HttpServletResponse) {
 
         val expDate = DateTime().plusHours(2)
         val subject: String? = null
-        val role: String? = null
 
         subject.apply {
             user.id
@@ -59,7 +57,7 @@ class TokenService {
         val authJwt = Jwts.builder()
             .setSubject(subject)
             .setId(UUID.randomUUID().toString())
-            .claim(Constants.ROLES, role)
+            .claim(Constants.OWNER, user.owner)
             .claim(Constants.ADMIN, admin)
             .setIssuedAt(Date())
             .signWith(SignatureAlgorithm.HS256, Base64.getEncoder().encodeToString(secret.toByteArray()))
@@ -110,8 +108,13 @@ class TokenService {
 
             refreshToken?.let {
                 try {
+                    refreshToken.user?.let {
+                        response.setContentType("application/json")
+                        response.setStatus(HttpServletResponse.SC_FORBIDDEN, "JWT token error")
+                        return
+                    }
 
-                    createAuthToken(request, response)
+                    createAuthToken(it.user!!, response)
 
                 } catch (e: SignatureException) {
 //                    analyticsService.refreshFailure("signature exception", token, inputToken)
