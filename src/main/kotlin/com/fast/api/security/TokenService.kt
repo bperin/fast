@@ -117,33 +117,27 @@ class TokenService {
                     createAuthToken(it.user!!, response)
 
                 } catch (e: SignatureException) {
-//                    analyticsService.refreshFailure("signature exception", token, inputToken)
                     response.setContentType("application/json")
                     response.setStatus(HttpServletResponse.SC_FORBIDDEN, "Invalid JWT token")
 
                 } catch (e: MalformedJwtException) {
-//                    analyticsService.refreshFailure("malformed JWT", token, inputToken)
                     response.setContentType("application/json")
                     response.setStatus(HttpServletResponse.SC_FORBIDDEN, "Invalid JWT token")
 
                 } catch (e: ExpiredJwtException) {
-//                    analyticsService.refreshFailure("expired JWT", token, inputToken)
                     response.setContentType("application/json")
                     response.setStatus(HttpServletResponse.SC_FORBIDDEN, "Expired JWT token")
 
                 } catch (e: UnsupportedJwtException) {
-//                    analyticsService.refreshFailure("unsupported jwt", token, inputToken)
                     response.setContentType("application/json")
                     response.setStatus(HttpServletResponse.SC_FORBIDDEN, "Unsupported JWT token")
 
                 } catch (e: IllegalArgumentException) {
-//                    analyticsService.refreshFailure("empty JWT,token", token, inputToken)
                     response.setContentType("application/json")
                     response.setStatus(HttpServletResponse.SC_FORBIDDEN, "Empty JWT token")
 
                 }
             } ?: kotlin.run {
-//                analyticsService.refreshFailure("refresh not found in DB", "token null on ? check", inputToken)
                 response.setContentType("application/json");
                 response.setStatus(HttpServletResponse.SC_FORBIDDEN, "Empty JWT token");
 
