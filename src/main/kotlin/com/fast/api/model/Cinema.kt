@@ -1,5 +1,6 @@
 package com.fast.api.model
 
+import com.fasterxml.jackson.annotation.JsonProperty
 import org.hibernate.annotations.CreationTimestamp
 import org.hibernate.annotations.Type
 import org.hibernate.annotations.UpdateTimestamp
@@ -16,6 +17,7 @@ data class Cinema(
 ) {
 
     @OneToMany(fetch = FetchType.EAGER, targetEntity = ShowTime::class)
+    @JsonProperty
     var showTimes: MutableList<ShowTime> = mutableListOf()
 
     @CreationTimestamp
