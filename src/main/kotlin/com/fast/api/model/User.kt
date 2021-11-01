@@ -5,8 +5,6 @@ import io.swagger.v3.oas.annotations.media.Schema
 import org.hibernate.annotations.CreationTimestamp
 import org.hibernate.annotations.Type
 import org.hibernate.annotations.UpdateTimestamp
-import org.joda.time.DateTime
-import org.joda.time.Period
 import java.util.*
 import javax.persistence.*
 
@@ -22,16 +20,17 @@ data class User(
     @OneToMany(fetch = FetchType.EAGER, targetEntity = Cinema::class)
     var cinemas: MutableList<Cinema> = mutableListOf()
 
-    @Column(name = "username", unique = true, length = 50)
-    @field:Schema(description = "username", type = "String", example = "Briguy")
-    var username: String? = null
+    @Column(name = "email", unique = true, length = 50)
+    @field:Schema(description = "email", type = "String", example = "bperin42@gmail.com")
+    var email: String? = null
 
     @Column(name = "password", nullable = false)
+    @field:Schema(description = "password", type = "String", example = "supersecret")
     @JsonIgnore
     var password: String = ""
 
     @Column(name = "owner", nullable = false)
-    var available: Boolean = false
+    var owner: Boolean = false
 
     @CreationTimestamp
     @Column(name = "created_at", updatable = false)

@@ -17,30 +17,50 @@ import javax.servlet.http.HttpServletResponse
 class TokenService {
 
     @Value("\${jwt.secret}")
-    val secret = "secret"
+    lateinit var secret: String
+
+    @Value("\${primary.owner.email}")
+    lateinit var primaryOwnerEmail: String
 
     @Autowired
-    private lateinit var refreshTokensRepo: RefreshTokensRepo //TODO refresh tokens
+    private lateinit var refreshTokensRepo: RefreshTokensRepo
 
     /**
      * Creates a new auth token and refresh token removes old refresh token from database
      */
+    fun login(user: User, response: HttpServletResponse) {
 
-    private fun createAuthToken(request: RefreshTokenRequest, response: HttpServletResponse) {
+        createRefreshToken(user, response)
+        createAuthToken(user, response)
 
-        val expDate = DateTime().plusYears(5)
-        var subject: String? = null
-        var role: String? = null
+        return
+    }
+
+    /**
+     * Creates a new auth token and refresh token removes old refresh token from database
+     * If the user is our pre defined primary owner set them as owner
+     */
+
+    private fun createAuthToken(user: User, response: HttpServletResponse) {
+
+        val expDate = DateTime().plusHours(2)
+        val subject: String? = null
+        val role: String? = null
 
         subject.apply {
-            subject = request.userId
-            role = Constants.USER
+            user.id
+        }
+
+        var admin = false
+        if (user.email === primaryOwnerEmail) {
+            admin = true
         }
 
         val authJwt = Jwts.builder()
             .setSubject(subject)
             .setId(UUID.randomUUID().toString())
             .claim(Constants.ROLES, role)
+            .claim(Constants.ADMIN, admin)
             .setIssuedAt(Date())
             .signWith(SignatureAlgorithm.HS256, Base64.getEncoder().encodeToString(secret.toByteArray()))
             .setExpiration(expDate.toDate())
@@ -52,7 +72,7 @@ class TokenService {
 
     private fun createRefreshToken(user: User, response: HttpServletResponse) {
 
-        val expDate = DateTime().plusMinutes(5)
+        val expDate = DateTime().plusYears(1)
         var subject: String? = null
 
         subject.apply {
