@@ -38,17 +38,17 @@ class AuthController : MainController() {
     /**
      * login user
      */
-    @PostMapping("/login")
     @ApiOperation("logs in a user and response with header jwt info")
-    fun login(@RequestBody loginUserRequest: LoginUserRequest, request: HttpServletRequest, response: HttpServletResponse): Any? {
+    @PostMapping("/login")
+    fun login(@RequestBody loginUserRequest: LoginUserRequest, request: HttpServletRequest, response: HttpServletResponse): User? {
         return authService.login(response, loginUserRequest)
     }
 
     /**
      * Refresh the auth token
      */
-    @PostMapping("/refresh_token")
     @ApiOperation("refreshes thee auth token given the users current token if the refresh token is valid")
+    @PostMapping("/refresh_token")
     fun refreshToken(@RequestBody request: RefreshTokenRequest, response: HttpServletResponse): Unit? {
         tokenService.refreshToken(request, response)
         return null
