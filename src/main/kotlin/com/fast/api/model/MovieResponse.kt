@@ -2,64 +2,63 @@ package com.fast.api.model
 
 
 import com.fasterxml.jackson.annotation.JsonProperty
-import com.google.gson.annotations.SerializedName
 
 data class MovieResponse(
-    @SerializedName("Actors")
+    @JsonProperty("Actors")
     val actors: String,
-    @SerializedName("Awards")
+    @JsonProperty("Awards")
     val awards: String,
-    @SerializedName("BoxOffice")
+    @JsonProperty("BoxOffice")
     val boxOffice: String,
-    @SerializedName("Country")
+    @JsonProperty("Country")
     val country: String,
-    @SerializedName("DVD")
+    @JsonProperty("DVD")
     val dVD: String,
-    @SerializedName("Director")
+    @JsonProperty("Director")
     val director: String,
-    @SerializedName("Genre")
+    @JsonProperty("Genre")
     val genre: String,
-    @SerializedName("imdbID")
+    @JsonProperty("imdbID")
     val imdbID: String,
-    @SerializedName("imdbRating")
+    @JsonProperty("imdbRating")
     val imdbRating: String,
-    @SerializedName("imdbVotes")
+    @JsonProperty("imdbVotes")
     val imdbVotes: String,
-    @SerializedName("Language")
+    @JsonProperty("Language")
     val language: String,
-    @SerializedName("Metascore")
+    @JsonProperty("Metascore")
     val metascore: String,
-    @SerializedName("Plot")
+    @JsonProperty("Plot")
     val plot: String,
-    @SerializedName("Poster")
+    @JsonProperty("Poster")
     val poster: String,
-    @SerializedName("Production")
+    @JsonProperty("Production")
     val production: String,
-    @SerializedName("Rated")
+    @JsonProperty("Rated")
     val rated: String,
-    @SerializedName("Ratings")
+    @JsonProperty("Ratings")
     val ratings: List<Rating>,
-    @SerializedName("Released")
+    @JsonProperty("Released")
     val released: String,
-    @SerializedName("Response")
+    @JsonProperty("Response")
     val response: String,
-    @SerializedName("Runtime")
+    @JsonProperty("Runtime")
     val runtime: String,
-    @SerializedName("Title")
+    @JsonProperty("Title")
     val title: String,
-    @SerializedName("Type")
+    @JsonProperty("Type")
     val type: String,
-    @SerializedName("Website")
+    @JsonProperty("Website")
     val website: String,
-    @SerializedName("Writer")
+    @JsonProperty("Writer")
     val writer: String,
-    @SerializedName("Year")
+    @JsonProperty("Year")
     val year: String
 ) {
     data class Rating(
-        @SerializedName("Source")
+        @JsonProperty("Source")
         val source: String,
-        @SerializedName("Value")
+        @JsonProperty("Value")
         val value: String
     )
 }

@@ -1,6 +1,5 @@
 package com.fast.api.model
 
-import com.fasterxml.jackson.annotation.JsonIgnore
 import io.swagger.v3.oas.annotations.media.Schema
 import org.hibernate.annotations.CreationTimestamp
 import org.hibernate.annotations.Type
@@ -26,7 +25,6 @@ data class User(
 
     @Column(name = "password", nullable = false)
     @field:Schema(description = "password", type = "String", example = "supersecret")
-    @JsonIgnore
     var password: String = ""
 
     @Column(name = "owner", nullable = false)

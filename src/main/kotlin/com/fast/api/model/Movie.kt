@@ -27,8 +27,8 @@ data class Movie(
     var title: String = ""
 
     @Column(name = "idmb_id", nullable = false, unique = true)
-    @SerializedName("imdb_id") //needed for Gson loading
     @JsonProperty("imdb_id")
+    @SerializedName("imdb_id") //needed for Gson loading
     var imdbId: String = ""
 
     @CreationTimestamp

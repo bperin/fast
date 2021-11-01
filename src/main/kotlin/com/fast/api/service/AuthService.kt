@@ -43,6 +43,7 @@ class AuthService {
         } ?: kotlin.run {
             throw ResponseStatusException(HttpStatus.BAD_REQUEST, "invalid email or password")
         }
+        return null
     }
 
     /**

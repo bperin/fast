@@ -28,6 +28,7 @@ class SecurityConfig() : WebSecurityConfigurerAdapter() {
             "/swagger-ui/**",
             "/webjars/**",
             "/api/v1/auth/**",
+            "/api/v1/auth/signup",
             "/api/v1/health/**",
             "/messages",
             "/index.html"

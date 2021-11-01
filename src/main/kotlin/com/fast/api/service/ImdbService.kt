@@ -6,9 +6,8 @@ import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.stereotype.Component
-import org.springframework.stereotype.Service
 import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
+import retrofit2.converter.jackson.JacksonConverterFactory
 import javax.annotation.PostConstruct
 
 /**
@@ -68,7 +67,7 @@ class ImdbService {
         apiClient = Retrofit.Builder()
             .baseUrl(API_ENDPOINT)
             .client(okHttpClient)
-            .addConverterFactory(GsonConverterFactory.create())
+            .addConverterFactory(JacksonConverterFactory.create())
             .build().create(ImdbApiInterface::class.java)
     }
 }
