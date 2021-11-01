@@ -4,61 +4,61 @@ package com.fast.api.model
 import com.fasterxml.jackson.annotation.JsonProperty
 
 data class MovieResponse(
-    @JsonProperty("Actors")
+    @JsonProperty("actors")
     val actors: String,
-    @JsonProperty("Awards")
+    @JsonProperty("awards")
     val awards: String,
-    @JsonProperty("BoxOffice")
+    @JsonProperty("box_office")
     val boxOffice: String,
-    @JsonProperty("Country")
+    @JsonProperty("country")
     val country: String,
-    @JsonProperty("DVD")
+    @JsonProperty("dvd")
     val dVD: String,
-    @JsonProperty("Director")
+    @JsonProperty("director")
     val director: String,
-    @JsonProperty("Genre")
+    @JsonProperty("genre")
     val genre: String,
-    @JsonProperty("imdbID")
+    @JsonProperty("imdb_id")
     val imdbID: String,
-    @JsonProperty("imdbRating")
+    @JsonProperty("imdb_rating")
     val imdbRating: String,
-    @JsonProperty("imdbVotes")
+    @JsonProperty("imdb_votes")
     val imdbVotes: String,
-    @JsonProperty("Language")
+    @JsonProperty("language")
     val language: String,
-    @JsonProperty("Metascore")
+    @JsonProperty("metascore")
     val metascore: String,
-    @JsonProperty("Plot")
+    @JsonProperty("plot")
     val plot: String,
-    @JsonProperty("Poster")
+    @JsonProperty("poster")
     val poster: String,
-    @JsonProperty("Production")
+    @JsonProperty("production")
     val production: String,
-    @JsonProperty("Rated")
+    @JsonProperty("rated")
     val rated: String,
-    @JsonProperty("Ratings")
+    @JsonProperty("rating")
     val ratings: List<Rating>,
-    @JsonProperty("Released")
+    @JsonProperty("released")
     val released: String,
-    @JsonProperty("Response")
+    @JsonProperty("response")
     val response: String,
-    @JsonProperty("Runtime")
+    @JsonProperty("runtime")
     val runtime: String,
-    @JsonProperty("Title")
+    @JsonProperty("title")
     val title: String,
-    @JsonProperty("Type")
+    @JsonProperty("type")
     val type: String,
-    @JsonProperty("Website")
+    @JsonProperty("website")
     val website: String,
-    @JsonProperty("Writer")
+    @JsonProperty("writer")
     val writer: String,
-    @JsonProperty("Year")
+    @JsonProperty("year")
     val year: String
 ) {
     data class Rating(
-        @JsonProperty("Source")
+        @JsonProperty("source")
         val source: String,
-        @JsonProperty("Value")
+        @JsonProperty("value")
         val value: String
     )
 }

@@ -19,6 +19,7 @@ data class Movie(
 ) {
 
     @OneToMany(fetch = FetchType.EAGER)
+    @JsonProperty("show_times")
     var showTimes: MutableList<ShowTime> = mutableListOf()
 
     @Column(name = "title")
@@ -33,10 +34,12 @@ data class Movie(
 
     @CreationTimestamp
     @Column(name = "created_at", updatable = false)
+    @JsonProperty("created_at")
     val createdAt: Date = Date()
 
     @UpdateTimestamp
     @Column(name = "updated_at")
+    @JsonProperty("updated_at")
     val updatedAt: Date = Date()
 
 }

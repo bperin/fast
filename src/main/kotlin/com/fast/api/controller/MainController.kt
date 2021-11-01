@@ -6,6 +6,6 @@ import org.springframework.web.bind.annotation.RestController
  * Put common logic between controllers here
  */
 @RestController
-class MainController {
+open class MainController {
 
 }

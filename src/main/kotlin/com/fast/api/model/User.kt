@@ -1,6 +1,7 @@
 package com.fast.api.model
 
 import com.fasterxml.jackson.annotation.JsonIgnore
+import com.fasterxml.jackson.annotation.JsonProperty
 import io.swagger.v3.oas.annotations.media.Schema
 import org.hibernate.annotations.CreationTimestamp
 import org.hibernate.annotations.Type
@@ -34,10 +35,12 @@ data class User(
 
     @CreationTimestamp
     @Column(name = "created_at", updatable = false)
+    @JsonProperty("created_at")
     val createdAt: Date = Date()
 
     @UpdateTimestamp
     @Column(name = "updated_at")
+    @JsonProperty("updated_at")
     val updatedAt: Date = Date()
 
 }
