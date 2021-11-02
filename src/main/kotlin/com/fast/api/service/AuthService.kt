@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.http.HttpStatus
 import org.springframework.stereotype.Service
+import org.springframework.transaction.annotation.Transactional
 import org.springframework.web.server.ResponseStatusException
 import java.util.*
 import javax.servlet.http.HttpServletResponse
@@ -20,7 +21,6 @@ class AuthService {
 
     @Value("\${primary.owner.email}")
     lateinit var primaryOwnerEmail: String
-
 
     @Autowired
     lateinit var usersRepo: UsersRepo
@@ -51,6 +51,7 @@ class AuthService {
      * Use bcrypt to hash the password
      * If the user is our primary owner set from env set them as owner
      */
+    @Transactional
     fun signUp(createUserRequest: CreateUserRequest, httpServletResponse: HttpServletResponse): User? {
 
         createUserRequest.email?.let {
