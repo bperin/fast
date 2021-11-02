@@ -10,6 +10,7 @@ object Constants {
     const val ROLE = "role"
     const val ROLES = "roles"
     const val OWNER = "owner"
+    const val VIEWER = "viewer"
     const val USER_ID = "user_id"
     const val JWT_TOKEN_HEADER = "X-Auth-Token"
     const val JWT_TOKEN_EXPIRATION_HEADER = "X-Auth-Expiration"
