@@ -51,22 +51,22 @@ class AuthService {
      * Use bcrypt to hash the password
      * If the user is our primary owner set from env set them as owner
      */
-    fun signUp(createWorkerRequest: CreateUserRequest, httpServletResponse: HttpServletResponse): User? {
+    fun signUp(createUserRequest: CreateUserRequest, httpServletResponse: HttpServletResponse): User? {
 
-        createWorkerRequest.email?.let {
+        createUserRequest.email?.let {
             usersRepo.findUserByEmail(it)?.let {
                 throw ResponseStatusException(HttpStatus.BAD_REQUEST, Constants.EMAIL + " " + Constants.ALREADY_IN_USE)
             }
         } ?: run {
 
-            if (createWorkerRequest.password.isNullOrEmpty() || createWorkerRequest.password.length < 7) {
+            if (createUserRequest.password.isNullOrEmpty() || createUserRequest.password.length < 7) {
                 throw ResponseStatusException(HttpStatus.BAD_REQUEST, "password too short")
             }
             val user = User()
-            user.email = createWorkerRequest.email
-            user.password = BcryptUtil.hashPassword(createWorkerRequest.password)
+            user.email = createUserRequest.email
+            user.password = BcryptUtil.hashPassword(createUserRequest.password)
 
-            if (createWorkerRequest.email.lowercase(Locale.getDefault()) == primaryOwnerEmail) {
+            if (createUserRequest.email.lowercase(Locale.getDefault()) == primaryOwnerEmail) {
                 user.owner = true
             }
             usersRepo.save(user)
