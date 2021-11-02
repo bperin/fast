@@ -44,21 +44,26 @@ class TokenService {
 
         val expDate = DateTime().plusHours(2)
         val subject: String? = null
+        val claimMap: MutableMap<String, Any> = mutableMapOf()
 
         subject.apply {
             user.id
         }
 
-        var admin = false
         if (user.email === primaryOwnerEmail) {
-            admin = true
+            claimMap[Constants.ADMIN] = true
+            claimMap[Constants.OWNER] = true
+        }
+        if (!user.owner) {
+            claimMap[Constants.VIEWER] = true
+        } else {
+            claimMap[Constants.OWNER] = true
         }
 
         val authJwt = Jwts.builder()
             .setSubject(subject)
             .setId(UUID.randomUUID().toString())
-            .claim(Constants.OWNER, user.owner)
-            .claim(Constants.ADMIN, admin)
+            .setClaims(claimMap)
             .setIssuedAt(Date())
             .signWith(SignatureAlgorithm.HS256, Base64.getEncoder().encodeToString(secret.toByteArray()))
             .setExpiration(expDate.toDate())
