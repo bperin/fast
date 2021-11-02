@@ -18,8 +18,11 @@ data class User(
     val id: UUID = UUID.randomUUID()
 ) {
 
-    @OneToMany(fetch = FetchType.EAGER, targetEntity = Cinema::class)
+    @OneToMany(targetEntity = Cinema::class)
     var cinemas: MutableList<Cinema> = mutableListOf()
+
+    @OneToMany(targetEntity = Rating::class)
+    var ratings: MutableList<Rating> = mutableListOf()
 
     @Column(name = "email", unique = true, length = 50)
     @field:Schema(description = "email", type = "String", example = "bperin42@gmail.com")
