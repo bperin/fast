@@ -42,7 +42,7 @@ class TokenService {
      */
     private fun createAuthToken(user: User, response: HttpServletResponse) {
 
-        val expDate = DateTime().plusHours(2)
+        val expDate = DateTime().plusMinutes(2)
         val subject: String? = null
         val claimMap: MutableMap<String, Any> = mutableMapOf()
 
@@ -111,7 +111,7 @@ class TokenService {
 
             val refreshToken = refreshTokensRepo.getRefreshToken(inputToken)
 
-            refreshToken?.let {
+            refreshToken?.let { refreshToken ->
                 try {
                     refreshToken.user?.let {
                         response.setContentType("application/json")
@@ -119,7 +119,7 @@ class TokenService {
                         return
                     }
 
-                    createAuthToken(it.user!!, response)
+                    createAuthToken(refreshToken.user!!, response)
 
                 } catch (e: SignatureException) {
                     response.setContentType("application/json")

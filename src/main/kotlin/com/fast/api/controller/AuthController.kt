@@ -4,7 +4,6 @@ import com.fast.api.model.User
 import com.fast.api.model.request.CreateUserRequest
 import com.fast.api.model.request.LoginUserRequest
 import com.fast.api.model.request.RefreshTokenRequest
-import com.fast.api.security.TokenService
 import com.fast.api.service.AuthService
 import io.swagger.annotations.ApiOperation
 import org.springframework.beans.factory.annotation.Autowired
@@ -21,9 +20,6 @@ import javax.servlet.http.HttpServletResponse
 @RestController
 @RequestMapping("/api/v1/auth")
 class AuthController : MainController() {
-
-    @Autowired
-    private lateinit var tokenService: TokenService
 
     @Autowired
     private lateinit var authService: AuthService
@@ -47,7 +43,7 @@ class AuthController : MainController() {
     /**
      * Refresh the auth token
      */
-    @ApiOperation("refreshes thee auth token given the users current token if the refresh token is valid")
+    @ApiOperation("refreshes the auth token given the users current token if the refresh token is valid")
     @PostMapping("/refresh_token")
     fun refreshToken(@RequestBody request: RefreshTokenRequest, response: HttpServletResponse): Unit? {
         tokenService.refreshToken(request, response)
