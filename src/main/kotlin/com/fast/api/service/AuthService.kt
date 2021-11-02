@@ -69,6 +69,7 @@ class AuthService {
             if (createWorkerRequest.email.lowercase(Locale.getDefault()) == primaryOwnerEmail) {
                 user.owner = true
             }
+            usersRepo.save(user)
             return user
         }
     }
