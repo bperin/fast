@@ -17,7 +17,7 @@ data class RefreshToken(
     val id: UUID = UUID.randomUUID()
 ) {
 
-    @Column(name = "token", unique = true, nullable = false, columnDefinition = "text")
+    @Column(name = "token", unique = true, nullable = false, length = 500)
     var token: String? = null
 
     @ManyToOne(fetch = FetchType.LAZY, optional = true)

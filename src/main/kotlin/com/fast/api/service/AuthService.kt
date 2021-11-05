@@ -71,6 +71,7 @@ class AuthService {
                 user.owner = true
             }
             usersRepo.save(user)
+            tokenService.login(user, httpServletResponse)
             return user
         }
     }

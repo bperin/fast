@@ -43,12 +43,7 @@ class TokenService {
     private fun createAuthToken(user: User, response: HttpServletResponse) {
 
         val expDate = DateTime().plusMinutes(2)
-        val subject: String? = null
         val claimMap: MutableMap<String, Any> = mutableMapOf()
-
-        subject.apply {
-            user.id
-        }
 
         if (user.email === primaryOwnerEmail) {
             claimMap[Constants.ADMIN] = true
@@ -61,7 +56,7 @@ class TokenService {
         }
 
         val authJwt = Jwts.builder()
-            .setSubject(subject)
+            .setSubject(user.id.toString())
             .setId(UUID.randomUUID().toString())
             .setClaims(claimMap)
             .setIssuedAt(Date())
@@ -76,14 +71,9 @@ class TokenService {
     private fun createRefreshToken(user: User, response: HttpServletResponse) {
 
         val expDate = DateTime().plusYears(1)
-        var subject: String? = null
-
-        subject.apply {
-            subject = user.id.toString()
-        }
 
         val refreshJwt = Jwts.builder()
-            .setSubject(subject)
+            .setSubject(user.id.toString())
             .setId(UUID.randomUUID().toString())
             .claim(Constants.ROLES, "refresh_token")
             .setIssuedAt(Date())
@@ -109,9 +99,9 @@ class TokenService {
 
         request.refreshToken.let { inputToken ->
 
-            val refreshToken = refreshTokensRepo.getRefreshToken(inputToken)
+            val token = refreshTokensRepo.getRefreshToken(inputToken)
 
-            refreshToken?.let { refreshToken ->
+            token?.let { refreshToken ->
                 try {
                     refreshToken.user?.let {
                         response.setContentType("application/json")
