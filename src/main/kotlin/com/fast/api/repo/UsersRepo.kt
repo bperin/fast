@@ -15,4 +15,7 @@ interface UsersRepo : CrudRepository<User, UUID> {
 
     @Query("select * from users where id = ?1 and owner = false", nativeQuery = true)
     fun findViewById(id: UUID): User?
+
+    @Query("select * from users where email = ?1", nativeQuery = true)
+    fun findUserByEmail(email: String): User?
 }

@@ -24,10 +24,9 @@ class AuthController : MainController() {
     @Autowired
     private lateinit var authService: AuthService
 
-
-    @ApiOperation("sign up a user")
+    @ApiOperation("sign up a viewer")
     @PostMapping("/signup")
-    fun signUp(@RequestBody createUserRequest: CreateUserRequest, request: HttpServletRequest, response: HttpServletResponse): User? {
+    fun signUpViewer(@RequestBody createUserRequest: CreateUserRequest, request: HttpServletRequest, response: HttpServletResponse): User? {
         return authService.signUp(createUserRequest, response)
     }
 

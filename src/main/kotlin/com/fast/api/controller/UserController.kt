@@ -30,13 +30,13 @@ class UserController {
         return UserUtil.user
     }
 
-    @ApiOperation("returns the user given their id")
+    @ApiOperation("returns the owner given their id")
     @GetMapping("/owners/{id}")
     fun getOwner(@PathVariable id: String): User? {
         return usersService.getOwner(id)
     }
 
-    @ApiOperation("returns the user given their id")
+    @ApiOperation("returns the viewer given their id")
     @GetMapping("/viewers/{id}")
     fun getViewer(@PathVariable id: String): User? {
         return usersService.getViewer(id)
