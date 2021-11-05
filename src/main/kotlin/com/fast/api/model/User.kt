@@ -33,8 +33,14 @@ data class User(
     @JsonIgnore
     var password: String = ""
 
-    @Column(name = "owner", nullable = false)
+    @Column(name = "owner", nullable = false, updatable = false)
     var owner: Boolean = false
+
+    @Column(name = "admin", nullable = false, updatable = false)
+    var admin: Boolean = false
+
+    @Column(name = "admin", nullable = false)
+    var verified: Boolean = false
 
     @CreationTimestamp
     @Column(name = "created_at", updatable = false)
