@@ -54,13 +54,13 @@ class AuthService {
     @Transactional
     fun signUp(createUserRequest: CreateUserRequest, httpServletResponse: HttpServletResponse): User? {
 
-        createUserRequest.email?.let {
+        createUserRequest.email.let {
             usersRepo.findUserByEmail(it)?.let {
                 throw ResponseStatusException(HttpStatus.BAD_REQUEST, Constants.EMAIL + " " + Constants.ALREADY_IN_USE)
             }
         } ?: run {
 
-            if (createUserRequest.password.isNullOrEmpty() || createUserRequest.password.length < 7) {
+            if (createUserRequest.password.isEmpty() || createUserRequest.password.length < 7) {
                 throw ResponseStatusException(HttpStatus.BAD_REQUEST, "password too short")
             }
             val user = User()

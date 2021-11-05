@@ -43,11 +43,15 @@ dependencies {
     //db
     runtimeOnly("org.postgresql:postgresql")
 
+    //aws
+    implementation("com.amazonaws:aws-java-sdk-ses:1.12.68")
+
     //documentation
     implementation("io.springfox:springfox-boot-starter:3.0.0")
     implementation("io.springfox:springfox-swagger-ui:3.0.0")
 
-
+    //utils
+    implementation("org.apache.commons:commons-lang3:3.0")
     implementation("io.jsonwebtoken:jjwt:0.9.1")
 
     implementation("joda-time:joda-time:2.10.5")

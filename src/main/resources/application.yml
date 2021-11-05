@@ -1,0 +1,7 @@
+spring:
+  application:
+    name: fast
+
+email:
+  region: us-east-1
+  sender: admin@brianperinimdb.com
