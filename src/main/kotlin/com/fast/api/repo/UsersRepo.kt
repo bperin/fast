@@ -10,6 +10,9 @@ import java.util.*
 @Repository
 interface UsersRepo : CrudRepository<User, UUID> {
 
-    @Query("SELECT u FROM User u WHERE lower(u.email) = ?1")
-    fun findUserByEmail(email: String): User?
+    @Query("select * from users where id = ?1 and owner = true", nativeQuery = true)
+    fun findOwnerById(id: UUID): User?
+
+    @Query("select * from users where id = ?1 and owner = false", nativeQuery = true)
+    fun findViewById(id: UUID): User?
 }
