@@ -80,13 +80,14 @@ class AuthService {
                 user.owner = true
                 user.admin = true
             }
+            user.verified = true
             usersRepo.save(user)
 
             val verificationToken = VerificationToken()
             verificationToken.user = user
             verificationTokensRepo.save(verificationToken)
 
-            awsSesService.sendEmailVerification(user.email, verificationToken.token)
+//            awsSesService.sendEmailVerification(user.email, verificationToken.token)
 
             return user
         }
