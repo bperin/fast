@@ -1,9 +1,11 @@
 package com.fast.api.service
 
 import com.fast.api.model.User
+import com.fast.api.model.VerificationToken
 import com.fast.api.model.request.CreateUserRequest
 import com.fast.api.model.request.LoginUserRequest
 import com.fast.api.repo.UsersRepo
+import com.fast.api.repo.VerificationTokensRepo
 import com.fast.api.security.BcryptUtil
 import com.fast.api.security.TokenService
 import com.fast.api.util.Constants
@@ -27,6 +29,13 @@ class AuthService {
 
     @Autowired
     lateinit var tokenService: TokenService
+
+    @Autowired
+    lateinit var awsSesService: AwsSesService
+
+    @Autowired
+    lateinit var verificationTokensRepo: VerificationTokensRepo
+
 
     /**
      * Logs in a user if the password hash is equal
@@ -69,10 +78,35 @@ class AuthService {
 
             if (createUserRequest.email.lowercase(Locale.getDefault()) == primaryOwnerEmail) {
                 user.owner = true
+                user.admin = true
             }
             usersRepo.save(user)
-            tokenService.login(user, httpServletResponse)
+
+            val verificationToken = VerificationToken()
+            verificationToken.user = user
+            verificationTokensRepo.save(verificationToken)
+
+            awsSesService.sendEmailVerification(user.email, verificationToken.token)
+
             return user
+        }
+    }
+
+    /**
+     * Find verification token and switch user to validated
+     */
+    fun confirmToken(token: String) {
+
+        verificationTokensRepo.getToken(token)?.let { verificationToken ->
+
+            if (verificationToken.expiresAt < Date()) {
+                verificationTokensRepo.delete(verificationToken)
+                throw ResponseStatusException(HttpStatus.BAD_REQUEST, "token expired")
+            }
+            verificationToken.user.verified = true
+            usersRepo.save(verificationToken.user)
+        } ?: kotlin.run {
+            throw ResponseStatusException(HttpStatus.BAD_REQUEST, "token not found")
         }
     }
 }

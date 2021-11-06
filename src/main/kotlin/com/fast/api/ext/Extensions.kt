@@ -1,5 +1,6 @@
 package com.fast.api.ext
 
+import org.apache.commons.lang3.RandomStringUtils
 import org.modelmapper.ModelMapper
 import org.modelmapper.config.Configuration
 import org.modelmapper.convention.MatchingStrategies
@@ -22,5 +23,9 @@ object Mapper {
 
 fun String.toUUID(): UUID {
     return UUID.fromString(this)
+}
+
+fun String.getRandomString(length: Int) {
+    RandomStringUtils.randomAlphanumeric(length)
 }
 

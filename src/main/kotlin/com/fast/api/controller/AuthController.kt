@@ -7,10 +7,7 @@ import com.fast.api.model.request.RefreshTokenRequest
 import com.fast.api.service.AuthService
 import io.swagger.annotations.ApiOperation
 import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.web.bind.annotation.PostMapping
-import org.springframework.web.bind.annotation.RequestBody
-import org.springframework.web.bind.annotation.RequestMapping
-import org.springframework.web.bind.annotation.RestController
+import org.springframework.web.bind.annotation.*
 import javax.servlet.http.HttpServletRequest
 import javax.servlet.http.HttpServletResponse
 
@@ -47,5 +44,14 @@ class AuthController : MainController() {
     fun refreshToken(@RequestBody request: RefreshTokenRequest, response: HttpServletResponse): Unit? {
         tokenService.refreshToken(request, response)
         return null
+    }
+
+    @GetMapping("/confirm_email")
+    @ApiOperation("confirm email after registration and clicking link")
+    fun confirmRegistration(@RequestParam("token") token: String): MutableMap<String, String> {
+        authService.confirmToken(token)
+        val response: MutableMap<String, String> = mutableMapOf()
+        response["response"] = "ok"
+        return response
     }
 }

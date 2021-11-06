@@ -26,7 +26,7 @@ data class User(
 
     @Column(name = "email", unique = true, length = 50)
     @field:Schema(description = "email", type = "String", example = "bperin42@gmail.com")
-    var email: String? = null
+    var email: String = ""
 
     @Column(name = "password", nullable = false)
     @field:Schema(description = "password", type = "String", example = "supersecret")
@@ -39,7 +39,7 @@ data class User(
     @Column(name = "admin", nullable = false, updatable = false)
     var admin: Boolean = false
 
-    @Column(name = "admin", nullable = false)
+    @Column(name = "verified", nullable = false)
     var verified: Boolean = false
 
     @CreationTimestamp
